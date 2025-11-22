@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #28a745;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s ease-out;
+        }
+        
+        @keyframes scaleIn {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .success-icon::after {
+            content: "✓";
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            animation: fadeIn 0.5s ease-out 0.2s both;
+        }
+        
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s ease-out 0.4s both;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #5469d4;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background 0.3s;
+            margin: 5px;
+            animation: fadeIn 0.5s ease-out 0.6s both;
+        }
+        
+        .btn:hover {
+            background: #4354bd;
+        }
+        
+        .btn-messenger {
+            background: #0084ff;
+        }
+        
+        .btn-messenger:hover {
+            background: #0073e6;
+        }
+        
+        .redirect-info {
+            margin-top: 20px;
+            color: #999;
+            font-size: 14px;
+            animation: fadeIn 0.5s ease-out 0.8s both;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon"></div>
+        <h1>Payment Successful!</h1>
+        <p>Thank you for your payment. Your transaction has been completed successfully.</p>
+        
+        <a href="https://m.me/659940370541271?ref=referral--success" class="btn btn-messenger">Continue to Messenger</a>
+        
+        
+        <p class="redirect-info" id="redirect-message"></p>
+    </div>
+
+    <script>
+        // Optional: Auto-redirect to Messenger after 5 seconds
+        // Uncomment the code below if you want automatic redirect
+        
+        /*
+        let countdown = 5;
+        const redirectMessage = document.getElementById('redirect-message');
+        
+        function updateCountdown() {
+            redirectMessage.textContent = `Redirecting to Messenger in ${countdown} seconds...`;
+            countdown--;
+            
+            if (countdown < 0) {
+                window.location.href = 'https://m.me/659940370541271?ref=w47196613';
+            } else {
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // Start countdown after page loads
+        setTimeout(updateCountdown, 1000);
+        */
+    </script>
+</body>
+</html>

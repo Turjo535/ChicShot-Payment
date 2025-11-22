@@ -1,0 +1,6 @@
+.env
+.env.example
+*.pyc
+__pycache__/
+*.sqlite3
+ChicShotVenv/
