@@ -132,6 +132,7 @@
     <script>
         // Get query parameters
         const urlParams = new URLSearchParams(window.location.search);
+        const fbId = urlParams.get('fb_id') || '';  // ✅ Extract fb_id
         const packageName = urlParams.get('package') || 'Premium';
         const amount = parseFloat(urlParams.get('amount') || '50');
         const currency = urlParams.get('currency') || 'eur';
@@ -140,18 +141,19 @@
         document.getElementById('package-name').textContent = packageName;
         document.getElementById('amount').textContent = amount.toFixed(2);
         
-        let stripe, elements, clientSecret;
+        let stripe, elements, clientSecret, paymentIntentId;
         
         // Initialize payment
         async function initializePayment() {
             try {
-                // Create payment intent (NO user_fb_id required)
+                // Create payment intent with fb_id
                 const response = await fetch('/api/create-payment-intent/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
+                        fb_id: fbId,  // ✅ Include fb_id
                         amount: amount,
                         package: packageName,
                         currency: currency,
@@ -166,6 +168,7 @@
                 }
                 
                 clientSecret = data.client_secret;
+                paymentIntentId = data.payment_intent_id;  // ✅ Store payment intent ID
                 const publishableKey = data.publishable_key;
                 
                 // Initialize Stripe
@@ -220,8 +223,26 @@
                     submitButton.disabled = false;
                     buttonText.textContent = 'Pay Now';
                 } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-                    // Payment succeeded - redirect to success page
-                    showMessage('Payment successful! Redirecting...', 'success');
+                    // Payment succeeded
+                    showMessage('Payment successful! Updating...', 'success');
+                    
+                    try {
+                        // ✅ Update payment status in database
+                        await fetch('/api/payment-success/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                payment_intent_id: paymentIntent.id
+                            })
+                        });
+                        
+                        console.log('✅ Payment status updated successfully');
+                    } catch (updateError) {
+                        console.error('⚠️ Failed to update payment status:', updateError);
+                        // Continue to success page anyway
+                    }
                     
                     // Redirect to success page
                     setTimeout(() => {
